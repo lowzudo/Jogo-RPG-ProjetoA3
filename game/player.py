@@ -2,29 +2,8 @@ import random
 import time
 import sys
 from treino import cena_treino_sistema
+from utils import typewriter, dramatic_print, input_typewriter
 
-def typewriter(text, delay=0.06):
-    """Efeito máquina de escrever estilo Undertale"""
-    for char in text:
-        print(char, end='', flush=True)
-        time.sleep(delay)
-    print()
-
-def dramatic_print(text, delay=0.08):
-    """Print dramático com pausas naturais"""
-    words = text.split()
-    for i, word in enumerate(words):
-        print(word, end=' ', flush=True)
-        time.sleep(delay)
-        # Pausa natural no final de frases
-        if word.endswith(('.', '!', '?', '...')):
-            time.sleep(delay * 3)
-    print()
-
-def input_typewriter(prompt, delay=0.06):
-    """Input com efeito typewriter"""
-    typewriter(prompt, delay)
-    return input("➡️  ")
 
 class Game:
     classes = ("Mago", "Espadachim", "Berserker")
@@ -317,3 +296,65 @@ class Game:
         dramatic_print(f"💪 Força: {self.forca}")
         dramatic_print(f"❤️  Vida: {self.vida_maxima}") 
         dramatic_print(f"⚡ Stamina: {self.stamina_maxima}")
+
+
+    def parte5(self):
+        print("\n" + "╔" + "═" * 58 + "╗")
+        dramatic_print(f"║{'CAPÍTULO 5: O CONFRONTO FINAL':^58}║")
+        print("╚" + "═" * 58 + "╝")
+        
+        dramatic_print("⏰ TIME-SKIP DO FRACASSADO")
+        dramatic_print("\n📅 2 meses se passam, e você agora se sente bem mais confiante.")
+        dramatic_print("📈 Seus atributos estão bem mais altos do que antes, e você anseia, tem sede de poder.")
+        dramatic_print("🔥 Cada vez mais e mais, não quer apenas ser um jogador qualquer.")
+        dramatic_print("👑 Você quer ser o melhor jogador que já pisou em Aincrad.")
+        
+        dramatic_print("\n🔍 Com sua percepção, força, agilidade e resistência aumentadas, você tem noção do poder em suas mãos.")
+        dramatic_print("🎯 Graças a sua percepção aguçada, você consegue detectar inimigos a longas distâncias, antecipar ataques e encontrar pontos fracos em inimigos fácilmente.")
+        dramatic_print("💥 Sua força aumentada permite que você cause danos devastadores com seus ataques, derrubando inimigos com facilidade.")
+        dramatic_print("⚡ Sua agilidade aprimorada torna você incrivelmente rápido e evasivo, permitindo que você desvie de ataques com graça e precisão.")
+        dramatic_print("🛡️  E sua resistência elevada faz com que você suporte mais danos, permitindo que você continue lutando mesmo em situações difíceis.")
+        
+        dramatic_print("\n🌪️  Tudo estava tranquilo, porém uma aura avassaladora começa a tomar conta do local em que você está.")
+        dramatic_print("😰 Você sente o ar pesando, enquanto aquilo se aproxima de você.")
+        dramatic_print("👤 Aquilo claramente não é humano, mas diferente de antes, você não sente medo.")
+        dramatic_print("🎭 E sim uma excitação, de ter alguém do seu nivel para enfrentar e ver o quanto melhorou.")
+        dramatic_print("⚔️  Você parte para cima da aura, e vê aquele mesmo homem encapuzado, do dia do hospital.")
+        
+        dramatic_print(f"\n👁️  O homem encapuzado sorri ao ver você se aproximando, ele diz: 'Parece que alguém não tem mais medo do desconhecido...'")
+        dramatic_print("🚀 'Você evoluiu garoto, tanto ao ponto de eu não conseguir reconhecer sua presença ao se aproximar de mim.'")
+        dramatic_print("💀 'Venha com tudo...' Enquanto diz isso, ele começa a liberar uma aura ainda maior, rindo, como se aquilo não fosse nada.")
+        
+        dramatic_print("\n💓 Você sente que tem alguém do seu nivel... Não, sente que ele talvez seja até mais forte que você.")
+        dramatic_print("🎯 Mas isso não importa, seu coração anseia por isso.")
+        
+        if self.classe == "Mago":
+            self.ataques_info.update({
+                "Explosão de Mana": {"stam": 8, "dano": 6 + self.forca},
+                "Circulo do Caos": {"stam": 10, "dano": 8 + self.forca},
+                "JUNÇÃO DE TODOS OS ELEMENTOS": {"stam": 15, "dano": 12 + self.forca}
+            })
+            dramatic_print("🔮 Mago: Explosão de Mana, Circulo do Caos, JUNÇÃO DE TODOS OS ELEMENTOS")
+        
+        elif self.classe == "Espadachim":
+            self.ataques_info.update({
+                "Espada de luz": {"stam": 7, "dano": 5 + self.forca},
+                "1000 cortes por segundo": {"stam": 9, "dano": 7 + self.forca},
+                "CORTE DIMENSIONAL": {"stam": 14, "dano": 11 + self.forca}
+            })
+            dramatic_print("⚔️  Espadachim: Espada de luz, 1000 cortes por segundo, CORTE DIMENSIONAL")
+        
+        elif self.classe == "Berserker":
+            self.ataques_info.update({
+                "Quebrador de Planetas": {"stam": 9, "dano": 7 + self.forca},
+                "Destruidor de Deuses": {"stam": 11, "dano": 9 + self.forca},
+                "DEVASTADOR DE GALÁXIAS": {"stam": 16, "dano": 13 + self.forca}
+            })
+            dramatic_print("🪓 Berserker: Quebrador de Planetas, Destruidor de Deuses, DEVASTADOR DE GALÁXIAS")
+        
+        self.ataques = list(self.ataques_info.keys())
+        
+        dramatic_print("─" * 60)
+        dramatic_print("🎯 Agora é a hora de provar seu verdadeiro poder!")
+        dramatic_print("💥 Enfrente seu destino, fracassado!")
+        dramatic_print("─" * 60)
