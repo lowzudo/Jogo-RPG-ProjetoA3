@@ -18,3 +18,9 @@ def dramatic_print(text, delay=0.12):
 def input_typewriter(prompt, delay=0.08):
     typewriter(prompt, delay)
     return input("➡️  ")
+
+
+def wait_for_enter():
+    """Pausa e espera o jogador pressionar Enter para continuar"""
+    input("\n[Pressione Enter para continuar...]")
+    print()
