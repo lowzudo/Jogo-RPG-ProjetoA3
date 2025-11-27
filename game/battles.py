@@ -459,7 +459,6 @@ def batalha_encapuzado(player):
                 if index_ataque < len(player.ataques):
                     nome_ataque = player.ataques[index_ataque]
                     info_ataque = player.ataques_info[nome_ataque]
-                    # ✅ CALCULAR DANO DINAMICAMENTE com a força ATUAL
                     dano_jogador = info_ataque["dano"] + player.forca + random.randint(5, 15)
                     custo_stamina = info_ataque["stam"]
                     
@@ -583,3 +582,268 @@ def batalha_encapuzado(player):
         print("-" * 40)
 
     return player.vida > 0
+
+def batalha_deuses(player):
+    print("\n" + "=" * 60)
+    dramatic_print("COMBATE FINAL: CONTRA OS DEUSES")
+    print("=" * 60)
+    
+    # Status dos Deuses
+    deuses_vida = 200
+    deuses_ataque_base = 15
+    deuses_defesa = 10
+    
+    dramatic_print("Os Deuses de Aincrad se revelam em toda sua arrogância!")
+    dramatic_print("Eles emanam um poder que faz o próprio ar tremer!")
+    
+    fase_batalha = 1
+    golpes_divinos_desbloqueados = False
+
+    while deuses_vida > 0 and player.vida > 0:
+        if deuses_vida <= 80 and fase_batalha == 1:
+            fase_batalha = 2
+            dramatic_print("\nOS DEUSES PARAM DE BRINCAR E MOSTRAM SEU VERDADEIRO PODER!")
+            dramatic_print("AGORA É PRA VALER, FRACASSADO!")
+            golpes_divinos_desbloqueados = True
+
+        print(f"\n{'='*50}")
+        dramatic_print(f"FASE {fase_batalha} | DEUSES: {deuses_vida}/200 | {player.nome}: {player.vida}/{player.vida_maxima}")
+        dramatic_print(f"SUA STAMINA: {player.stamina}/{player.stamina_maxima}")
+        print(f"{'='*50}")
+        
+        # Regeneração de stamina
+        player.stamina = min(player.stamina + 5, player.stamina_maxima)
+        
+        # Menu de ações
+        dramatic_print("\nO que você vai fazer, seu merda?")
+        print("1. Atacar esses desgraçados")
+        print("2. Usar Poção de Cura (se tiver)")
+        print("3. Analisar esses filhos da puta")
+        print("4. Tentar fugir como um covarde")
+        
+        escolha = input("\nEscolha sua ação (1-4): ")
+        
+        if escolha == "1":
+            print(f"\nEscolha seu ataque, fracassado:")
+            
+            if not golpes_divinos_desbloqueados:
+                for i, ataque in enumerate(player.ataques[:3], 1):
+                    custo = player.ataques_info[ataque]["stam"]
+                    dano_base = player.ataques_info[ataque]["dano"]
+                    dano_total = dano_base + player.forca
+                    print(f"{i}. {ataque} (Dano: {dano_total}, Stamina: {custo})")
+            else:
+                for i, ataque in enumerate(player.ataques, 1):
+                    custo = player.ataques_info[ataque]["stam"]
+                    dano_base = player.ataques_info[ataque]["dano"]
+                    dano_total = dano_base + player.forca
+                    print(f"{i}. {ataque} (Dano: {dano_total}, Stamina: {custo})")
+            
+            try:
+                ataque_esc = int(input("\nEscolha seu ataque: ")) - 1
+                
+                if not golpes_divinos_desbloqueados:
+                    ataques_disponiveis = player.ataques[:3]
+                else:
+                    ataques_disponiveis = player.ataques
+                
+                if 0 <= ataque_esc < len(ataques_disponiveis):
+                    ataque_nome = ataques_disponiveis[ataque_esc]
+                    custo_stamina = player.ataques_info[ataque_nome]["stam"]
+                    dano_base = player.ataques_info[ataque_nome]["dano"]
+                    dano_final = dano_base + player.forca
+                    
+                    if player.stamina >= custo_stamina:
+                        critico = random.random() < 0.15
+                        
+                        if critico:
+                            dano_final = int(dano_final * 1.8)
+                            dramatic_print("ACERTO CRÍTICO! ATÉ EU FIQUEI SURPRESO!")
+                        
+                        dano_real = max(1, dano_final - deuses_defesa)
+                        deuses_vida -= dano_real
+                        player.stamina -= custo_stamina
+                        
+                        dramatic_print(f"Você acerta {ataque_nome} e causa {dano_real} de dano!")
+                        
+                        if dano_real >= 25:
+                            dramatic_print("Os Deuses recuam! Eles não esperavam essa porra toda!")
+                        elif dano_real >= 15:
+                            dramatic_print("Os Deuses parecem surpresos, mas ainda te subestimam.")
+                        else:
+                            dramatic_print("Os Deuses riem: 'Isso é tudo que você tem?'")
+                            
+                    else:
+                        dramatic_print("Stamina insuficiente! Você tropeça como um idiota.")
+                        
+                else:
+                    dramatic_print("Ataque inválido! Você fica confuso e perde a chance.")
+                    
+            except ValueError:
+                dramatic_print("Não sabe nem digitar números? Patético.")
+                
+        elif escolha == "2":
+            if hasattr(player, 'pocoes') and player.pocoes > 0:
+                cura = random.randint(20, 35)
+                player.vida = min(player.vida + cura, player.vida_maxima)
+                player.pocoes -= 1
+                dramatic_print(f"Você usa uma poção e recupera {cura} de vida!")
+                dramatic_print(f"Poções restantes: {player.pocoes}")
+            else:
+                dramatic_print("Não tem poções, seu azarado!")
+                
+        elif escolha == "3":
+            dramatic_print("\nANÁLISE DOS DEUSES:")
+            dramatic_print("Seres arrogantes que brincam com vidas humanas")
+            dramatic_print("Poder: Absurdo")
+            dramatic_print("Defesa: Alta pra caralho")
+            dramatic_print("Fraqueza: Ego inflado e subestimam humanos")
+            continue
+            
+        elif escolha == "4":
+            dramatic_print("Você tenta fugir, mas tá preso nessa dimensão de merda!")
+            dramatic_print("Os Deuses riem: 'Onde você pensa que vai, verme?'")
+            
+        else:
+            dramatic_print("Ação inválida! Para de enrolar.")
+            continue
+        
+        # Ataque dos Deuses
+        if deuses_vida > 0:
+            dramatic_print("\n" + "-" * 50)
+            dramatic_print("AGORA VAI SE FUDER!")
+            
+            if fase_batalha == 1:
+                ataques_deuses = [
+                    "Julgamento Divino",
+                    "Raio da Morte", 
+                    "Destruição Total",
+                    "Maldição Eterna"
+                ]
+                dano_base_deus = deuses_ataque_base + random.randint(3, 8)
+            else:
+                ataques_deuses = [
+                    "ANNIQUILAÇÃO ABSOLUTA",
+                    "FIM DA EXISTÊNCIA", 
+                    "DESTRUIÇÃO CÓSMICA",
+                    "EXTINÇÃO UNIVERSAL"
+                ]
+                dano_base_deus = deuses_ataque_base + random.randint(8, 15)
+            
+            ataque_deus = random.choice(ataques_deuses)
+            
+            defesa_bem_sucedida = random.random() < (player.stamina * 0.01)
+            
+            if defesa_bem_sucedida:
+                dramatic_print(f"Você desvia do {ataque_deus} por pouco!")
+            else:
+                dano_real_deus = max(1, dano_base_deus - (player.resistencia // 4))
+                player.vida -= dano_real_deus
+                
+                dramatic_print(f"Os Deuses usam {ataque_deus}!")
+                dramatic_print(f"Você toma {dano_real_deus} de dano na fuça!")
+                
+                if "Maldição" in ataque_deus and dano_real_deus > 0:
+                    player.stamina = max(0, player.stamina - 8)
+                    dramatic_print("A maldição te drena, seu energúmeno!")
+        
+        # Verificar fim de jogo
+        if deuses_vida <= 0:
+            print("\n" + "=" * 60)
+            dramatic_print("VITÓRIA CONTRA OS DEUSES!")
+            dramatic_print("Os Deuses caem diante de você, completamente fodidos!")
+            dramatic_print("Um merdinha derrotou as divindades que controlavam esse mundo!")
+            dramatic_print("=" * 60)
+            
+            # Recompensa épica
+            player.nivel += 5
+            player.vida_maxima += 50
+            player.vida = player.vida_maxima
+            player.stamina_maxima += 40
+            player.stamina = player.stamina_maxima
+            player.forca += 15
+            player.agilidade += 12
+            player.resistencia += 15
+            player.percepcao += 12
+            
+            if hasattr(player, 'pocoes'):
+                player.pocoes += 10
+            
+            dramatic_print("\nRECOMPENSAS PELA VITÓRIA:")
+            dramatic_print(f"Subiu para o nível {player.nivel}, seu monstro!")
+            dramatic_print("+50 Vida Máxima, +40 Stamina Máxima")
+            dramatic_print("+15 Força, +12 Agilidade, +15 Resistência, +12 Percepção")
+            if hasattr(player, 'pocoes'):
+                dramatic_print("+10 Poções de Cura")
+            
+            wait_for_enter()
+            final_epico(player)
+            return True
+            
+        elif player.vida <= 0:
+            print("\n" + "=" * 60)
+            dramatic_print("FODEU...")
+            dramatic_print("Os Deuses riem do seu corpo destruído...")
+            dramatic_print("Aincrad continua na merda graças a você...")
+            dramatic_print("=" * 60)
+            return False
+    
+    return False
+
+def final_epico(player):
+    print("\n" + "=" * 80)
+    dramatic_print("FIM DE JOGO: O FRACASSADO QUE VIROU LENDA")
+    print("=" * 80)
+    
+    dramatic_print(f"\n{player.nome}, você fez essa merda toda!")
+    dramatic_print("Um bosta qualquer derrotou os próprios deuses.")
+    dramatic_print("Aincrad finalmente tá livre desses filhos da puta...")
+    
+    dramatic_print("\nSua história vai virar lenda:")
+    dramatic_print("A lenda do fracassado que fodeu com os deuses!")
+    dramatic_print("Do merdinha que mostrou que até os fodões caem!")
+    
+    dramatic_print(f"\nEstatísticas Finais desse monstro:")
+    print(f"Classe: {player.classe}")
+    print(f"Nível: {player.nivel}")
+    print(f"Vida: {player.vida_maxima}")
+    print(f"Stamina: {player.stamina_maxima}")
+    print(f"Força: {player.forca} | Agilidade: {player.agilidade}")
+    print(f"Resistência: {player.resistencia} | Percepção: {player.percepcao}")
+    
+    dramatic_print("\n" + "=" * 80)
+    dramatic_print("ACABOU, SEU DESGRAÇADO! VOCÊ CONSEGUIU!")
+    dramatic_print("QUEM DIRIA QUE UM FRACASSADO LIKE YOU CHEGARIA TÃO LONGE...")
+    dramatic_print("=" * 80)
+    
+    wait_for_enter()
+
+def final_epico(player):
+    print("\n" + "=" * 80)
+    dramatic_print("FIM DO JOGO: A LENDA DO MORTAL QUE DESAFIOU OS DEUSES")
+    print("=" * 80)
+    
+    dramatic_print(f"\n{player.nome}, você fez o impossível!")
+    dramatic_print("Um mero jogador derrotou as divindades que controlavam este mundo.")
+    dramatic_print("Aincrad agora é livre...")
+    
+    dramatic_print("\nSua jornada se tornará uma lenda:")
+    dramatic_print("A lenda do mortal que alcançou o poder dos deuses!")
+    dramatic_print("Do herói que quebrou as correntes do destino!")
+    
+    dramatic_print(f"\nEstatísticas Finais de {player.nome}:")
+    print(f"Classe: {player.classe}")
+    print(f"Nível: {player.nivel}")
+    print(f"Vida: {player.vida_maxima}")
+    print(f"Stamina: {player.stamina_maxima}")
+    print(f"Força: {player.forca} | Agilidade: {player.agilidade}")
+    print(f"Resistência: {player.resistencia} | Percepção: {player.percepcao}")
+    
+    dramatic_print("\n" + "★" * 80)
+    dramatic_print("OBRIGADO POR JOGAR. ESPERO QUE TENHA SE DIVERTIDO!")
+    dramatic_print("★" * 80)
+    
+    wait_for_enter()
+
+
+    

@@ -451,3 +451,67 @@ class Game:
         dramatic_print("-" * 60)
         
         wait_for_enter()
+
+    
+    def parte6(self):
+        print("\n" + "=" * 60)
+        dramatic_print("CAPÍTULO 6: O DESPERTAR DIVINO")
+        print("=" * 60)
+        
+        dramatic_print("Após enfrentar o homem encapuzado, e saber a real força dele, você fica em dúvida. Dúvida se irá realmente conseguir derrotar aquelas estátuas, afinal, nem ele conseguiu...")
+
+        dramatic_print("Antes que você conseguisse pensar, o chão a baixo de você se abre, como se fosse uma porta, você iria despencar, porém com seu tempo de reação aguçado, não é isso que acontece.")
+        
+        wait_for_enter()
+
+        dramatic_print("Parece que o ser que queria que você caísse, não previu sua evolução")
+
+        dramatic_print("Você pensa quem iria querer colocar você em uma emboscada. Então uma aura começa a tomar conta do subsolo.")
+
+        dramatic_print("Uma aura que até então você tinha sentido. Uma aura poderosa, talvez até mais do que a do homem encapuzado. Porém você não se sente mais fraco ou inferior. Você SABE, que é mais forte do que aquela aura, do que aquele ser.")
+        
+        wait_for_enter()
+
+        dramatic_print("E com um poder desses para abrir uma cratera no chão, como se não fosse nada. Só podia ser eles, aqueles Deuses de merda")
+
+        dramatic_print("Você sem pensar duas vezes pula de cabeça de onde a aura esta emanando")
+        
+        wait_for_enter()
+
+        dramatic_print("\nAo cair na cratera, você se encontra em uma dimensão completamente diferente.")
+        dramatic_print("O ar é pesado, carregado com energia divina, e você sente que está no território deles.")
+        dramatic_print("Mas diferente de antes, você não teme. Você anseia por esse confronto.")
+        
+        wait_for_enter()
+
+        dramatic_print("\nSeus atributos evoluíram além do que você imaginava ser possível:")
+        dramatic_print(f"Força: {self.forca} | Agilidade: {self.agilidade} | Percepção: {self.percepcao} | Resistência: {self.resistencia}")
+        dramatic_print("Você não é mais o mesmo jogador que temia os Deuses. Você se tornou um Deus também.")
+        
+        wait_for_enter()
+
+        dramatic_print("\nDas sombras, figuras divinas começam a emergir.")
+        dramatic_print("São eles - os Deuses que brincam com as vidas dos jogadores como se fossem marionetes.")
+        dramatic_print("Mas hoje, as cordas serão cortadas.")
+        
+        wait_for_enter()
+
+        dramatic_print(f"\nO Deus principal olha para você com desdém e mostra o mesmo sorriso da última vez: 'Quem diria, você está vivo por um milagre e ainda tem coragem de voltar aqui. Apenas morra inseto'")
+        dramatic_print("'Você deveria ter caído na armadilha como os outros... Mas não importa, vamos acabar com isso aqui.'")
+        dramatic_print("Eles liberam uma aura divina poderosa.")
+        
+        wait_for_enter()
+
+        dramatic_print("\nVocê não se acovarda diante a aura, e emana a sua de volta, mostrando para eles que quem deve temer, não é você.")
+        dramatic_print("Os Deuses arregalam os olhos assustados e se perguntam: 'Como um reles humano conseguiu tamanho poder...'.")
+
+
+        dramatic_print("\n" + "-" * 60)
+        dramatic_print("O confronto contra os Deuses está prestes a começar!")
+        dramatic_print("O destino de Aincrad está em suas mãos!")
+        dramatic_print("-" * 60)
+        
+        wait_for_enter()
+
+        dramatic_print("Novos poderes desbloqueados.")
+
