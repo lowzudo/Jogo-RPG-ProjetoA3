@@ -17,9 +17,10 @@ public class GameTree {
         TreeNode gameOver = new TreeNode("game_over", "GAME OVER");
         TreeNode sistema = new TreeNode("sistema", "JOGADOR-SISTEMA");
         TreeNode treinamento = new TreeNode("treinamento", "TREINAMENTO DO SISTEMA");
-        TreeNode part5 = new TreeNode("part5", "PRÓXIMO CAPÍTULO");
+        TreeNode part5 = new TreeNode("part5", "CAPÍTULO 5: O CONFRONTO FINAL");
+        TreeNode vitoria = new TreeNode("vitoria", "VITÓRIA FINAL");
         
-        // Construção da árvore corrigida
+        // Construção da árvore
         root.addChoice("", desafio);
         
         desafio.addChoice("", part2);        
@@ -35,8 +36,10 @@ public class GameTree {
 
         sistema.addChoice("continuar", treinamento);
         
-        treinamento.addChoice("", part5); // Conexão do treinamento para o próximo capítulo
+        treinamento.addChoice("", part5);
         
+        part5.addChoice("continuar", vitoria);
+
         this.currentNode = root;
     }
     

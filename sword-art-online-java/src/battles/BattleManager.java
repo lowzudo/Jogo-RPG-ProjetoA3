@@ -3,9 +3,11 @@ package src.battles;
 import src.entities.Player;
 import src.utils.GameUtils;
 import java.util.Scanner;
+import java.util.Random;
 
 public class BattleManager {
     private Scanner scanner = new Scanner(System.in);
+    private Random random = new Random(); // Adicione esta linha
     
     public boolean desafioInicial(Player player) {
         GameUtils.dramaticPrint("\n" + "-".repeat(60));
@@ -326,7 +328,6 @@ public class BattleManager {
                 "'Sua carne vai virar jantar!'",
                 "'Hihihi, ele está sangrando!'"
             };
-            java.util.Random random = new java.util.Random();
             GameUtils.dramaticPrint("Goblins: " + frasesGoblins[random.nextInt(frasesGoblins.length)]);
             
             if (player.getHealth() <= 0) {
@@ -348,6 +349,274 @@ public class BattleManager {
             GameUtils.dramaticPrint("Você não é forte o suficiente, não passa de um fracassado. Vá treinar mais, fracote!");
             return false;
         }
+    }
+
+    public boolean batalhaEncapuzado(Player player) {
+        int vidaEncapuzado = 150;
+        int staminaEncapuzado = 120;
+        int forcaEncapuzado = 25;
+        
+        int faseBatalha = 1;
+        boolean golpesEspeciaisDesbloqueados = false;
+
+        GameUtils.dramaticPrint("\n" + "=".repeat(60));
+        GameUtils.dramaticPrint("BATALHA CONTRA O HOMEM QUE VENCEU O SISTEMA!");
+        GameUtils.dramaticPrint("=".repeat(60));
+
+        GameUtils.dramaticPrint("Inimigo: Homem Encapuzado");
+        GameUtils.dramaticPrint("Vida do Encapuzado: " + vidaEncapuzado);
+        GameUtils.dramaticPrint("Ataque do Encapuzado: " + forcaEncapuzado);
+
+        GameUtils.dramaticPrint("Eu vejo que você evoluiu... Mas não o bastante para me derrotar. Venha, mostre-me do que é capaz!");
+
+        GameUtils.dramaticPrint("Desafio secreto desbloqueado: 'Desafiante do Sistema - Derrote o Homem que venceu do Sistema'");
+
+        int vidaOriginal = player.getMaxHealth();
+        int staminaOriginal = player.getMaxStamina();
+        int forcaOriginal = player.getStrength();
+        
+        player.setHealth(90);
+        player.setMaxHealth(90);
+        player.setStamina(90);
+        player.setMaxStamina(90);
+        player.setStrength(15);
+
+        GameUtils.dramaticPrint("'Vamos ver o quanto eu progredi nesses 3 meses... Eu quero testar AQUILO...' - Você pensa consigo mesmo.");
+
+        while (vidaEncapuzado > 0 && player.getHealth() > 0) {
+            if (vidaEncapuzado <= 50 && faseBatalha == 1) {
+                faseBatalha = 2;
+                GameUtils.dramaticPrint("\nFASE 2 DESBLOQUEADA: O VÉU DA REALIDADE SE ABRE!");
+                GameUtils.dramaticPrint("SEUS GOLPES ESPECIAIS MAIS PODEROSOS ESTÃO LIBERADOS!");
+                golpesEspeciaisDesbloqueados = true;
+            }
+
+            GameUtils.dramaticPrint("\n" + "-".repeat(50));
+            GameUtils.dramaticPrint("FASE " + faseBatalha + " | ENCAPUZADO: " + vidaEncapuzado + "/150 | " + player.getName() + ": " + player.getHealth() + "/90");
+            GameUtils.dramaticPrint("SUA STAMINA: " + player.getStamina() + "/90 | AURA DO INIMIGO: " + staminaEncapuzado + "/120");
+            GameUtils.dramaticPrint("-".repeat(50));
+            
+            GameUtils.dramaticPrint("\nESCOLHA SEU ATAQUE:");
+            
+            if (!golpesEspeciaisDesbloqueados) {
+                GameUtils.dramaticPrint("1. Ataque Básico (5 stamina)");
+                GameUtils.dramaticPrint("2. Defesa com Contra-Ataque (10 stamina)");
+                GameUtils.dramaticPrint("3. Focar (0 stamina)");
+                
+                int i = 4;
+                for (String ataque : player.getAttackNames()) {
+                    if (i <= 7) {
+                        int custo = player.getAttacks().get(ataque).getStaminaCost();
+                        GameUtils.dramaticPrint(i + ". " + ataque + " (" + custo + " stamina)");
+                        i++;
+                    }
+                }
+            } else {
+                int i = 1;
+                for (String ataque : player.getAttackNames()) {
+                    int custo = player.getAttacks().get(ataque).getStaminaCost();
+                    GameUtils.dramaticPrint(i + ". " + ataque + " (" + custo + " stamina)");
+                    i++;
+                }
+            }
+            
+            String escolha = scanner.nextLine().trim();
+            int danoJogador = 0;
+            int custoStamina = 0;
+            
+            if (!golpesEspeciaisDesbloqueados) {
+                switch (escolha) {
+                    case "1":
+                        danoJogador = random.nextInt(8) + 8 + player.getStrength();
+                        custoStamina = 5;
+                        GameUtils.dramaticPrint("Ataque Básico! Dano: " + danoJogador);
+                        break;
+                    case "2":
+                        danoJogador = random.nextInt(6) + 3 + player.getStrength();
+                        custoStamina = 10;
+                        player.setHealth(Math.min(player.getHealth() + 8, player.getMaxHealth()));
+                        GameUtils.dramaticPrint("Defesa com Contra-Ataque! Dano: " + danoJogador + " + Cura: 8");
+                        break;
+                    case "3":
+                        custoStamina = 0;
+                        int bonusDano = random.nextInt(8) + 5;
+                        player.setStrength(player.getStrength() + bonusDano);
+                        GameUtils.dramaticPrint("Foco Intenso! Força +" + bonusDano + " neste turno!");
+                        break;
+                    default:
+                        try {
+                            int escolhaNum = Integer.parseInt(escolha);
+                            if (escolhaNum >= 4 && escolhaNum <= 7) {
+                                int indexAtaque = escolhaNum - 4;
+                                if (indexAtaque < player.getAttackNames().size()) {
+                                    String nomeAtaque = player.getAttackNames().get(indexAtaque);
+                                    int danoBase = player.getAttacks().get(nomeAtaque).getBaseDamage();
+                                    custoStamina = player.getAttacks().get(nomeAtaque).getStaminaCost();
+                                    danoJogador = danoBase + player.getStrength() + random.nextInt(11) + 5;
+                                    GameUtils.dramaticPrint(nomeAtaque + "! Dano: " + danoJogador);
+                                }
+                            } else {
+                                GameUtils.dramaticPrint("Movimento inválido! Você perde o turno!");
+                                custoStamina = 5;
+                            }
+                        } catch (NumberFormatException e) {
+                            GameUtils.dramaticPrint("Movimento inválido! Você perde o turno!");
+                            custoStamina = 5;
+                        }
+                }
+            } else {
+                try {
+                    int escolhaNum = Integer.parseInt(escolha);
+                    if (escolhaNum >= 1 && escolhaNum <= player.getAttackNames().size()) {
+                        String nomeAtaque = player.getAttackNames().get(escolhaNum - 1);
+                        int danoBase = player.getAttacks().get(nomeAtaque).getBaseDamage();
+                        custoStamina = player.getAttacks().get(nomeAtaque).getStaminaCost();
+                        danoJogador = danoBase + player.getStrength() + random.nextInt(11) + 5;
+                        GameUtils.dramaticPrint(nomeAtaque + "! Dano: " + danoJogador);
+                    } else {
+                        GameUtils.dramaticPrint("Movimento inválido! Você perde o turno!");
+                        custoStamina = 5;
+                    }
+                } catch (NumberFormatException e) {
+                    GameUtils.dramaticPrint("Movimento inválido! Você perde o turno!");
+                    custoStamina = 5;
+                }
+            }
+            
+            if (player.getStamina() >= custoStamina) {
+                player.setStamina(player.getStamina() - custoStamina);
+                vidaEncapuzado -= Math.max(0, danoJogador);
+            } else {
+                GameUtils.dramaticPrint("STAMINA INSUFICIENTE! Movimento falha!");
+            }
+            
+            if (vidaEncapuzado <= 0) {
+                GameUtils.dramaticPrint("\nVOCÊ DERROTOU O HOMEM ENCAPUZADO!");
+                player.setMaxHealth(vidaOriginal);
+                player.setMaxStamina(staminaOriginal);
+                player.setStrength(forcaOriginal);
+                vitoriaEncapuzado(player);
+                return true;
+            }
+            
+            GameUtils.dramaticPrint("\nTURNO DO HOMEM ENCAPUZADO...");
+            try { Thread.sleep(2000); } catch (InterruptedException e) {}
+            
+            int danoInimigo;
+            String nomeAtaqueInimigo;
+            
+            if (faseBatalha == 1) {
+                String[] ataques = {"Soco Sônico", "Campo de Força", "Investida Relâmpago"};
+                nomeAtaqueInimigo = ataques[random.nextInt(ataques.length)];
+                danoInimigo = random.nextInt(11) + (nomeAtaqueInimigo.equals("Investida Relâmpago") ? 15 : 10);
+            } else {
+                String[] ataques = {"DISRUPTOR DIMENSIONAL", "COLAPSO EXISTENCIAL", "PARADOXO TEMPORAL"};
+                nomeAtaqueInimigo = ataques[random.nextInt(ataques.length)];
+                danoInimigo = random.nextInt(16) + (nomeAtaqueInimigo.equals("COLAPSO EXISTENCIAL") ? 30 : 25);
+            }
+            
+            int chanceEsquiva = Math.min(30, player.getStamina());
+            if (random.nextInt(100) < chanceEsquiva) {
+                GameUtils.dramaticPrint("Você esquiva habilmente do " + nomeAtaqueInimigo + "!");
+                danoInimigo = 0;
+            } else {
+                GameUtils.dramaticPrint(nomeAtaqueInimigo + " acerta você! Dano: " + danoInimigo);
+                player.setHealth(player.getHealth() - danoInimigo);
+            }
+            
+            player.setStamina(Math.min(player.getStamina() + 8, player.getMaxStamina()));
+            staminaEncapuzado = Math.min(staminaEncapuzado + 10, 120);
+            
+            if (player.getHealth() <= 0) {
+                break;
+            }
+            
+            try { Thread.sleep(1000); } catch (InterruptedException e) {}
+        }
+
+        if (player.getHealth() <= 0) {
+            derrotaEncapuzado(player, vidaOriginal, staminaOriginal, forcaOriginal);
+            return false;
+        }
+        
+        return true;
+    }
+    
+    private void vitoriaEncapuzado(Player player) {
+        GameUtils.dramaticPrint("\n" + "=".repeat(60));
+        GameUtils.dramaticPrint("VITÓRIA CONTRA O IMPOSSÍVEL");
+        GameUtils.dramaticPrint("=".repeat(60));
+
+        GameUtils.dramaticPrint("Com um último golpe desferido com toda sua força... Você finalmente foi capaz de o derrotar, após uma árdua luta.");
+        GameUtils.dramaticPrint("O homem encapuzado cai de joelhos... Sua aura avassaladora que tomava o ambiente, começa a se dissipar.");
+        GameUtils.dramaticPrint("Ele remove lentamente o traje, junto de seu capuz, revelando um rosto marcado por cicatrizes e sabedoria.");
+
+        GameUtils.dramaticPrint("Você pensa consigo mesmo: 'Ele era tão forte assim mesmo com essa idade. Talvez se ele fosse mais novo o resultado seria diferente...'");
+        GameUtils.dramaticPrint("Você escuta ele o chamando para perto... E então ele diz");
+        GameUtils.dramaticPrint("\n'Incrível, " + player.getName() + "...' ele sussurra com voz rouca.");
+        GameUtils.dramaticPrint("'Você alcançou o que eu pensei ser impossível...'");
+        GameUtils.dramaticPrint("'Durante séculos, eu busquei por alguém que pudesse me superar, que pudesse carregar o fardo...'");
+
+        GameUtils.dramaticPrint("\n'O sistema não foi criado para nos controlar, mas para nos preparar.'");
+        GameUtils.dramaticPrint("'Prepare-se para a verdade sobre Aincrad, sobre as estátuas, sobre tudo...'");
+        GameUtils.dramaticPrint("Sua forma começa a brilhar com uma luz intensa.");
+
+        GameUtils.dramaticPrint("\n'Você não derrotou apenas um homem - você derrotou o próprio conceito de limite!'");
+        GameUtils.dramaticPrint("'A partir de hoje, você é o novo Guardião do Sistema.'");
+        GameUtils.dramaticPrint("'Use esse poder com sabedoria, pois grandes desafios ainda estão por vir...'");
+
+        GameUtils.dramaticPrint("\n" + "-".repeat(60));
+        GameUtils.dramaticPrint("CONQUISTA DESBLOQUEADA: 'O Novo Guardião'");
+        GameUtils.dramaticPrint("-".repeat(60));
+
+        player.setStrength(player.getStrength() + 50);
+        player.setMaxHealth(player.getMaxHealth() + 100);
+        player.setMaxStamina(player.getMaxStamina() + 200);
+        player.setHealth(player.getMaxHealth());
+        player.setStamina(player.getMaxStamina());
+
+        GameUtils.dramaticPrint("Força: " + player.getStrength() + " (+50)");
+        GameUtils.dramaticPrint("Vida: " + player.getMaxHealth() + " (+100)");
+        GameUtils.dramaticPrint("Stamina: " + player.getMaxStamina() + " (+200)");
+
+        GameUtils.dramaticPrint("\nO homem sorri pela última vez, antes de se dissipar em partículas de luz.");
+        GameUtils.dramaticPrint("'Enfrente as estátuas... Nem eu fui capaz de derrotá-las. Elas guardam a verdade final.'");
+        GameUtils.dramaticPrint("Sua voz ecoa pela última vez: 'Mostre a elas o que é verdadeiro poder...'");
+    }
+    
+    private void derrotaEncapuzado(Player player, int vidaOriginal, int staminaOriginal, int forcaOriginal) {
+        player.setMaxHealth(vidaOriginal);
+        player.setMaxStamina(staminaOriginal);
+        player.setStrength(forcaOriginal);
+        player.setHealth(player.getMaxHealth());
+        player.setStamina(player.getMaxStamina());
+        
+        GameUtils.dramaticPrint("\nVOCÊ CHEGOU AO SEU LIMITE...");
+        GameUtils.dramaticPrint("O homem encapuzado olha para você sorrindo...");
+        GameUtils.dramaticPrint("Diferente do sorriso da estátua, aquele não era um sorriso de desprezo, e sim de admiração.");
+        
+        GameUtils.dramaticPrint("Homem: Você chegou longe, muito longe, meu jovem... Eu acredito no seu potencial.");
+        GameUtils.dramaticPrint("Ele prepara um golpe final, ele ergue sua mão o clima ao redor começa a mudar...");
+        GameUtils.dramaticPrint("Você pensa consigo mesmo: 'Eu não estou triste, eu consegui mudar o destino da minha vida, eu consegui me tornar mais forte...'");
+        
+        GameUtils.dramaticPrint("Você continua pensando: 'A única coisa em que me arrependo, é de não poder me vingar daquela estátua que me subestimou...'");
+        GameUtils.dramaticPrint("Corta uma tela que mostra os homens mais fortes que já existiram, o primeiro tem seu nome como ???, o segundo é você.");
+        
+        GameUtils.dramaticPrint("O homem encapuzado diz antes de te atacar: 'Você foi um adversário digno, muitos já tiveram a oportunidade dada pelo sistema...'");
+        GameUtils.dramaticPrint("Prestes a dar o golpe final, o homem encapuzado diz: 'A verdade garoto... É que minha era já acabou há muitos anos...'");
+        
+        GameUtils.dramaticPrint("Conquista Desbloqueada - 'O Homem mais forte do Mundo'. Melhorando seus atributos");
+
+        player.setStrength(player.getStrength() + 30);
+        player.setMaxHealth(player.getMaxHealth() + 50);
+        player.setMaxStamina(player.getMaxStamina() + 100);
+        player.setHealth(player.getMaxHealth());
+        player.setStamina(player.getMaxStamina());
+
+        GameUtils.dramaticPrint("\nSEUS NOVOS STATUS:");
+        GameUtils.dramaticPrint("Força: " + player.getStrength() + " (+30)");
+        GameUtils.dramaticPrint("Vida: " + player.getMaxHealth() + " (+50)");
+        GameUtils.dramaticPrint("Stamina: " + player.getMaxStamina() + " (+100)");
     }
     
     private void gameOver() {

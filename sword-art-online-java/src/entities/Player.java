@@ -134,9 +134,17 @@ public class Player {
         int danoReal = info.getBaseDamage() + this.strength;
         GameUtils.dramaticPrint(ataque + " | Dano: " + danoReal + " | Stamina: " + info.getStaminaCost());
     }
-}
+}   
 
     public void setStrength(int strength) { this.strength = strength; }
     public void setMaxHealth(int maxHealth) { this.maxHealth = maxHealth; }
     public void setMaxStamina(int maxStamina) { this.maxStamina = maxStamina; }
+
+
+    public void addAttack(String name, int staminaCost, int baseDamage) {
+        this.attacks.put(name, new Attack(staminaCost, baseDamage));
+        if (!this.attackNames.contains(name)) {
+            this.attackNames.add(name);
+        }
+    }
 }

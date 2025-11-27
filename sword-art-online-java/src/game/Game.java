@@ -93,11 +93,84 @@ public class Game {
     }
 
     private void parte5() {
+    GameUtils.dramaticPrint("\n" + "=".repeat(60));
+    GameUtils.dramaticPrint("CAPÍTULO 5: O CONFRONTO FINAL");
+    GameUtils.dramaticPrint("=".repeat(60));
+    
+    GameUtils.dramaticPrint("TIME-SKIP DO FRACASSADO");
+    GameUtils.dramaticPrint("\n2 meses se passam, e você agora se sente bem mais confiante.");
+    GameUtils.dramaticPrint("Seus atributos estão bem mais altos do que antes, e você anseia, tem sede de poder.");
+    GameUtils.dramaticPrint("Cada vez mais e mais, não quer apenas ser um jogador qualquer.");
+    GameUtils.dramaticPrint("Você quer ser o melhor jogador que já pisou em Aincrad.");
+
+    GameUtils.dramaticPrint("\nCom sua percepção, força, agilidade e resistência aumentadas, você tem noção do poder em suas mãos.");
+    GameUtils.dramaticPrint("Graças a sua percepção aguçada, você consegue detectar inimigos a longas distâncias, antecipar ataques e encontrar pontos fracos em inimigos fácilmente.");
+    GameUtils.dramaticPrint("Sua força aumentada permite que você cause danos devastadores com seus ataques, derrubando inimigos com facilidade.");
+    GameUtils.dramaticPrint("Sua agilidade aprimorada torna você incrivelmente rápido e evasivo, permitindo que você desvie de ataques com graça e precisão.");
+    GameUtils.dramaticPrint("E sua resistência elevada faz com que você suporte mais danos, permitindo que você continue lutando mesmo em situações difíceis.");
+
+    GameUtils.dramaticPrint("\nTudo estava tranquilo, porém uma aura avassaladora começa a tomar conta do local em que você está.");
+    GameUtils.dramaticPrint("Você sente o ar pesando, enquanto aquilo se aproxima de você.");
+    GameUtils.dramaticPrint("Aquilo claramente não é humano, mas diferente de antes, você não sente medo.");
+    GameUtils.dramaticPrint("E sim uma excitação, de ter alguém do seu nivel para enfrentar e ver o quanto melhorou.");
+    GameUtils.dramaticPrint("Você parte para cima da aura, e vê aquele mesmo homem encapuzado, do dia do hospital.");
+
+    GameUtils.dramaticPrint("\nO homem encapuzado sorri ao ver você se aproximando, ele diz: 'Parece que alguém não tem mais medo do desconhecido...'");
+    GameUtils.dramaticPrint("'Você evoluiu garoto, tanto ao ponto de eu não conseguir reconhecer sua presença ao se aproximar de mim.'");
+    GameUtils.dramaticPrint("'Venha com tudo...' Enquanto diz isso, ele começa a liberar uma aura ainda maior, rindo, como se aquilo não fosse nada.");
+
+    GameUtils.dramaticPrint("\nVocê sente que tem alguém do seu nivel... Não, sente que ele talvez seja até mais forte que você.");
+    GameUtils.dramaticPrint("Mas isso não importa, seu coração anseia por isso.");
+    
+    String className = player.getClassName();
+    if (className.equals("Mago")) {
+        player.addAttack("Explosão de Mana", 8, 6);
+        player.addAttack("Circulo do Caos", 10, 8);
+        player.addAttack("JUNÇÃO DE TODOS OS ELEMENTOS", 15, 12);
+        GameUtils.dramaticPrint("Novos ataques desbloqueados: Explosão de Mana, Circulo do Caos, JUNÇÃO DE TODOS OS ELEMENTOS");
+    } else if (className.equals("Espadachim")) {
+        player.addAttack("Espada de luz", 7, 5);
+        player.addAttack("1000 cortes por segundo", 9, 7);
+        player.addAttack("CORTE DIMENSIONAL", 14, 11);
+        GameUtils.dramaticPrint("Novos ataques desbloqueados: Espada de luz, 1000 cortes por segundo, CORTE DIMENSIONAL");
+    } else if (className.equals("Berserker")) {
+        player.addAttack("Quebrador de Planetas", 9, 7);
+        player.addAttack("Destruidor de Deuses", 11, 9);
+        player.addAttack("DEVASTADOR DE GALÁXIAS", 16, 13);
+        GameUtils.dramaticPrint("Novos ataques desbloqueados: Quebrador de Planetas, Destruidor de Deuses, DEVASTADOR DE GALÁXIAS");
+    }
+
+    GameUtils.dramaticPrint("\n" + "-".repeat(60));
+    GameUtils.dramaticPrint("Agora é a hora de provar seu verdadeiro poder!");
+    GameUtils.dramaticPrint("Enfrente seu destino, fracassado!");
+    GameUtils.dramaticPrint("-".repeat(60));
+
+    boolean venceu = battleManager.batalhaEncapuzado(player);
+    if (venceu) {
+        gameTree.moveTo("");
+    } else {
+        gameTree.moveTo("game_over");
+    }
+}
+
+    private void vitoriaFinal() {
         GameUtils.dramaticPrint("\n" + "=".repeat(60));
-        GameUtils.dramaticPrint("CAPÍTULO 5: EM DESENVOLVIMENTO");
+        GameUtils.dramaticPrint("VITÓRIA FINAL!");
         GameUtils.dramaticPrint("=".repeat(60));
-        GameUtils.dramaticPrint("Parabéns! Você completou o treinamento!");
-        GameUtils.dramaticPrint("O jogo continuará em breve...");
+        
+        GameUtils.dramaticPrint("PARABÉNS, " + player.getName() + "!");
+        GameUtils.dramaticPrint("Você se tornou o novo Guardião do Sistema!");
+        GameUtils.dramaticPrint("O homem encapuzado finalmente encontrou paz, e você agora carrega o fardo...");
+        GameUtils.dramaticPrint("Mas esta é apenas o começo de sua verdadeira jornada.");
+        
+        GameUtils.dramaticPrint("\nSeus atributos finais:");
+        GameUtils.dramaticPrint("Força: " + player.getStrength());
+        GameUtils.dramaticPrint("Vida: " + player.getMaxHealth());
+        GameUtils.dramaticPrint("Stamina: " + player.getMaxStamina());
+        GameUtils.dramaticPrint("Nível: " + player.getLevel());
+        
+        GameUtils.dramaticPrint("\nQUEM DIRIA QUE UM FRACASSADO IGUAL VOCÊ CHEGARIA TÃO LONGE...");
+        GameUtils.dramaticPrint("Mas lembre-se: as estátuas ainda aguardam...");
     }
     
     private void showChoices(TreeNode node) {
@@ -363,11 +436,6 @@ private boolean desfechoFinal() {
         GameUtils.dramaticPrint("GAME OVER - VOCÊ É UM FRACASSADO MESMO!");
     }
     
-    private void vitoriaFinal() {
-        GameUtils.dramaticPrint("VITÓRIA FINAL!");
-        GameUtils.dramaticPrint("QUEM DIRIA QUE UM FRACASSADO IGUAL VOCÊ CHEGARIA TÃO LONGE...");
-    }
-
     private void sistema() {
         GameUtils.dramaticPrint("\nVocê acorda em um hospital, com o corpo inteiro. Você não está mais partido ao meio, e está vivo, isso é impossivel, você pensa consigo mesmo.");
         GameUtils.dramaticPrint("Você começa a se levantar da cama, mas sente medo, medo daquilo se repetir, medo de continuar sendo fraco, medo do inevitável.");
