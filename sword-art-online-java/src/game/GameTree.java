@@ -19,8 +19,9 @@ public class GameTree {
         TreeNode treinamento = new TreeNode("treinamento", "TREINAMENTO DO SISTEMA");
         TreeNode part5 = new TreeNode("part5", "CAPÍTULO 5: O CONFRONTO FINAL");
         TreeNode vitoria = new TreeNode("vitoria", "VITÓRIA FINAL");
+        TreeNode part6 = new TreeNode("part6", "CAPÍTULO 6: O DESPERTAR DIVINO");
+        TreeNode batalhaDeuses = new TreeNode("batalha_deuses", "BATALHA FINAL: CONTRA OS DEUSES");
         
-        // Construção da árvore
         root.addChoice("", desafio);
         
         desafio.addChoice("", part2);        
@@ -36,12 +37,18 @@ public class GameTree {
 
         sistema.addChoice("continuar", treinamento);
         
-        treinamento.addChoice("", part5);
+        treinamento.addChoice("continuar", part5);
         
-        part5.addChoice("continuar", vitoria);
+        part5.addChoice("continuar", part6);
+        
+        part6.addChoice("continuar", batalhaDeuses);
+        
+        batalhaDeuses.addChoice("vitoria", vitoria);
+        batalhaDeuses.addChoice("game_over", gameOver);
 
         this.currentNode = root;
     }
+
     
     public TreeNode getCurrentNode() { return currentNode; }
     public TreeNode getRoot() { return root; }

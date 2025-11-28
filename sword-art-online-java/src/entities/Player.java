@@ -14,6 +14,11 @@ public class Player {
     private int maxStamina;
     private int potions;
     
+    // NOVOS ATRIBUTOS ADICIONADOS
+    private int agility;
+    private int resistance;
+    private int perception;
+    
     // Sistema de ataques
     private Map<String, Attack> attacks;
     private List<String> attackNames;
@@ -33,16 +38,25 @@ public class Player {
                 this.strength = 3;
                 this.health = this.maxHealth = 7;
                 this.stamina = this.maxStamina = 15;
+                this.agility = 4;
+                this.resistance = 2;
+                this.perception = 6;
                 break;
             case "Espadachim":
                 this.strength = 5;
                 this.health = this.maxHealth = 6;
                 this.stamina = this.maxStamina = 12;
+                this.agility = 5;
+                this.resistance = 3;
+                this.perception = 4;
                 break;
             case "Berserker":
                 this.strength = 4;
                 this.health = this.maxHealth = 10;
                 this.stamina = this.maxStamina = 14;
+                this.agility = 3;
+                this.resistance = 5;
+                this.perception = 3;
                 break;
             default:
                 throw new IllegalArgumentException("Classe inválida.");
@@ -86,21 +100,41 @@ public class Player {
     public Map<String, Attack> getAttacks() { return attacks; }
     public List<String> getAttackNames() { return attackNames; }
     
+    // NOVOS GETTERS
+    public int getAgility() { return agility; }
+    public int getResistance() { return resistance; }
+    public int getPerception() { return perception; }
+    
     // ========== SETTERS ==========
     public void setHealth(int health) { this.health = health; }
     public void setStamina(int stamina) { this.stamina = stamina; }
     public void setPotions(int potions) { this.potions = potions; }
+    public void setStrength(int strength) { this.strength = strength; }
+    public void setMaxHealth(int maxHealth) { this.maxHealth = maxHealth; }
+    public void setMaxStamina(int maxStamina) { this.maxStamina = maxStamina; }
+    
+    // NOVOS SETTERS
+    public void setAgility(int agility) { this.agility = agility; }
+    public void setResistance(int resistance) { this.resistance = resistance; }
+    public void setPerception(int perception) { this.perception = perception; }
+    public void setLevel(int level) { this.level = level; }
     
     // ========== MÉTODOS DE AÇÃO ==========
     public void levelUp() {
         int oldStrength = strength;
         int oldHealth = maxHealth;
         int oldStamina = maxStamina;
+        int oldAgility = agility;
+        int oldResistance = resistance;
+        int oldPerception = perception;
         
         level++;
         strength += 2;
         maxHealth += 3;
         maxStamina += 5;
+        agility += 1;
+        resistance += 1;
+        perception += 1;
         health = maxHealth;
         stamina = maxStamina;
         
@@ -117,8 +151,10 @@ public class Player {
         GameUtils.dramaticPrint("Força: " + oldStrength + " -> " + strength + " (+2)");
         GameUtils.dramaticPrint("Vida: " + oldHealth + " -> " + maxHealth + " (+3)");
         GameUtils.dramaticPrint("Stamina: " + oldStamina + " -> " + maxStamina + " (+5)");
+        GameUtils.dramaticPrint("Agilidade: " + oldAgility + " -> " + agility + " (+1)");
+        GameUtils.dramaticPrint("Resistência: " + oldResistance + " -> " + resistance + " (+1)");
+        GameUtils.dramaticPrint("Percepção: " + oldPerception + " -> " + perception + " (+1)");
         GameUtils.dramaticPrint("=".repeat(60));
-        
     }
     
     public void rest() {
@@ -128,18 +164,13 @@ public class Player {
     }
     
     public void showAttacks() {
-    GameUtils.dramaticPrint("\n=== SEUS ATAQUES ===");
-    for (String ataque : attackNames) {
-        Attack info = attacks.get(ataque);
-        int danoReal = info.getBaseDamage() + this.strength;
-        GameUtils.dramaticPrint(ataque + " | Dano: " + danoReal + " | Stamina: " + info.getStaminaCost());
-    }
-}   
-
-    public void setStrength(int strength) { this.strength = strength; }
-    public void setMaxHealth(int maxHealth) { this.maxHealth = maxHealth; }
-    public void setMaxStamina(int maxStamina) { this.maxStamina = maxStamina; }
-
+        GameUtils.dramaticPrint("\n=== SEUS ATAQUES ===");
+        for (String ataque : attackNames) {
+            Attack info = attacks.get(ataque);
+            int danoReal = info.getBaseDamage() + this.strength;
+            GameUtils.dramaticPrint(ataque + " | Dano: " + danoReal + " | Stamina: " + info.getStaminaCost());
+        }
+    }   
 
     public void addAttack(String name, int staminaCost, int baseDamage) {
         this.attacks.put(name, new Attack(staminaCost, baseDamage));

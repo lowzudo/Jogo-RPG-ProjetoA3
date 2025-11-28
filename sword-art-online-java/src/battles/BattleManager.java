@@ -7,7 +7,7 @@ import java.util.Random;
 
 public class BattleManager {
     private Scanner scanner = new Scanner(System.in);
-    private Random random = new Random(); // Adicione esta linha
+    private Random random = new Random();
     
     public boolean desafioInicial(Player player) {
         GameUtils.dramaticPrint("\n" + "-".repeat(60));
@@ -617,6 +617,255 @@ public class BattleManager {
         GameUtils.dramaticPrint("Força: " + player.getStrength() + " (+30)");
         GameUtils.dramaticPrint("Vida: " + player.getMaxHealth() + " (+50)");
         GameUtils.dramaticPrint("Stamina: " + player.getMaxStamina() + " (+100)");
+    }
+
+    public boolean batalhaDeuses(Player player) {
+        GameUtils.dramaticPrint("\n" + "=".repeat(60));
+        GameUtils.dramaticPrint("COMBATE FINAL: CONTRA OS DEUSES");
+        GameUtils.dramaticPrint("=".repeat(60));
+        
+        int deusesVida = 200;
+        int deusesAtaqueBase = 15;
+        int deusesDefesa = 10;
+        
+        GameUtils.dramaticPrint("Os Deuses de Aincrad se revelam em toda sua arrogância!");
+        GameUtils.dramaticPrint("Eles emanam um poder que faz o próprio ar tremer!");
+        
+        int faseBatalha = 1;
+        boolean golpesDivinosDesbloqueados = false;
+
+        while (deusesVida > 0 && player.getHealth() > 0) {
+            if (deusesVida <= 80 && faseBatalha == 1) {
+                faseBatalha = 2;
+                GameUtils.dramaticPrint("\nOS DEUSES PARAM DE BRINCAR E MOSTRAM SEU VERDADEIRO PODER!");
+                GameUtils.dramaticPrint("AGORA É PRA VALER, FRACASSADO!");
+                golpesDivinosDesbloqueados = true;
+            }
+
+            GameUtils.dramaticPrint("\n" + "=".repeat(50));
+            GameUtils.dramaticPrint("FASE " + faseBatalha + " | DEUSES: " + deusesVida + "/200 | " + player.getName() + ": " + player.getHealth() + "/" + player.getMaxHealth());
+            GameUtils.dramaticPrint("SUA STAMINA: " + player.getStamina() + "/" + player.getMaxStamina());
+            GameUtils.dramaticPrint("=".repeat(50));
+            
+            player.setStamina(Math.min(player.getStamina() + 5, player.getMaxStamina()));
+            
+            // Menu de ações
+            GameUtils.dramaticPrint("\nO que você vai fazer, jogador-sistema n1?");
+            GameUtils.dramaticPrint("1. Atacar esses desgraçados");
+            GameUtils.dramaticPrint("2. Usar Poção de Cura (se tiver)");
+            GameUtils.dramaticPrint("3. Analisar esses Deuses de merda");
+            GameUtils.dramaticPrint("4. Tentar fugir como um covarde");
+            
+            System.out.print("\nEscolha sua ação (1-4): ");
+            String escolha = scanner.nextLine().trim();
+            
+            if (escolha.equals("1")) {
+                GameUtils.dramaticPrint("\nEscolha seu ataque, fracassado:");
+                
+                java.util.List<String> ataquesDisponiveis;
+                if (!golpesDivinosDesbloqueados) {
+                    ataquesDisponiveis = player.getAttackNames().subList(0, Math.min(3, player.getAttackNames().size()));
+                } else {
+                    ataquesDisponiveis = player.getAttackNames();
+                }
+                
+                for (int i = 0; i < ataquesDisponiveis.size(); i++) {
+                    String ataque = ataquesDisponiveis.get(i);
+                    int custo = player.getAttacks().get(ataque).getStaminaCost();
+                    int danoBase = player.getAttacks().get(ataque).getBaseDamage();
+                    int danoTotal = danoBase + player.getStrength();
+                    GameUtils.dramaticPrint((i + 1) + ". " + ataque + " (Dano: " + danoTotal + ", Stamina: " + custo + ")");
+                }
+                
+                try {
+                    int ataqueEsc = Integer.parseInt(scanner.nextLine().trim()) - 1;
+                    
+                    if (ataqueEsc >= 0 && ataqueEsc < ataquesDisponiveis.size()) {
+                        String ataqueNome = ataquesDisponiveis.get(ataqueEsc);
+                        int custoStamina = player.getAttacks().get(ataqueNome).getStaminaCost();
+                        int danoBase = player.getAttacks().get(ataqueNome).getBaseDamage();
+                        int danoFinal = danoBase + player.getStrength();
+                        
+                        if (player.getStamina() >= custoStamina) {
+                            boolean critico = random.nextDouble() < 0.15;
+                            
+                            if (critico) {
+                                danoFinal = (int)(danoFinal * 1.8);
+                                GameUtils.dramaticPrint("ACERTO CRÍTICO! ATÉ EU FIQUEI SURPRESO!");
+                            }
+                            
+                            int danoReal = Math.max(1, danoFinal - deusesDefesa);
+                            deusesVida -= danoReal;
+                            player.setStamina(player.getStamina() - custoStamina);
+                            
+                            GameUtils.dramaticPrint("Você acerta " + ataqueNome + " e causa " + danoReal + " de dano!");
+                            
+                            if (danoReal >= 25) {
+                                GameUtils.dramaticPrint("Os Deuses recuam! Eles não esperavam essa porra toda!");
+                            } else if (danoReal >= 15) {
+                                GameUtils.dramaticPrint("Os Deuses parecem surpresos, mas ainda te subestimam.");
+                            } else {
+                                GameUtils.dramaticPrint("Os Deuses riem: 'Isso é tudo que você tem?'");
+                            }
+                                
+                        } else {
+                            GameUtils.dramaticPrint("Stamina insuficiente! Você tropeça como um idiota.");
+                        }
+                            
+                    } else {
+                        GameUtils.dramaticPrint("Ataque inválido! Você fica confuso e perde a chance.");
+                    }
+                        
+                } catch (NumberFormatException e) {
+                    GameUtils.dramaticPrint("Não sabe nem digitar números? Patético.");
+                }
+                    
+            } else if (escolha.equals("2")) {
+                if (player.getPotions() > 0) {
+                    int cura = random.nextInt(16) + 20;
+                    player.setHealth(Math.min(player.getHealth() + cura, player.getMaxHealth()));
+                    player.setPotions(player.getPotions() - 1);
+                    GameUtils.dramaticPrint("Você usa uma poção e recupera " + cura + " de vida!");
+                    GameUtils.dramaticPrint("Poções restantes: " + player.getPotions());
+                } else {
+                    GameUtils.dramaticPrint("Não tem poções, seu azarado!");
+                }
+                    
+            } else if (escolha.equals("3")) {
+                GameUtils.dramaticPrint("\nANÁLISE DOS DEUSES:");
+                GameUtils.dramaticPrint("Seres arrogantes que brincam com vidas humanas");
+                GameUtils.dramaticPrint("Poder: Absurdo");
+                GameUtils.dramaticPrint("Defesa: Alta pra caramba");
+                GameUtils.dramaticPrint("Fraqueza: Ego inflado e subestimam humanos");
+                continue;
+                
+            } else if (escolha.equals("4")) {
+                GameUtils.dramaticPrint("Você tenta fugir, mas tá preso nessa dimensão de merda!");
+                GameUtils.dramaticPrint("Os Deuses riem: 'Onde você pensa que vai, verme?'");
+                
+            } else {
+                GameUtils.dramaticPrint("Ação inválida! Para de enrolar.");
+                continue;
+            }
+            
+            if (deusesVida > 0) {
+                GameUtils.dramaticPrint("\n" + "-".repeat(50));
+                GameUtils.dramaticPrint("AGORA VAI SE FUDER!");
+                
+                String[] ataquesDeuses;
+                int danoBaseDeus;
+                
+                if (faseBatalha == 1) {
+                    ataquesDeuses = new String[]{
+                        "Julgamento Divino",
+                        "Raio da Morte", 
+                        "Destruição Total",
+                        "Maldição Eterna"
+                    };
+                    danoBaseDeus = deusesAtaqueBase + random.nextInt(6) + 3;
+                } else {
+                    ataquesDeuses = new String[]{
+                        "ANNIQUILAÇÃO ABSOLUTA",
+                        "FIM DA EXISTÊNCIA", 
+                        "DESTRUIÇÃO CÓSMICA",
+                        "EXTINÇÃO UNIVERSAL"
+                    };
+                    danoBaseDeus = deusesAtaqueBase + random.nextInt(8) + 8; // 8-15
+                }
+                
+                String ataqueDeus = ataquesDeuses[random.nextInt(ataquesDeuses.length)];
+                
+                boolean defesaBemSucedida = random.nextDouble() < (player.getStamina() * 0.01);
+                
+                if (defesaBemSucedida) {
+                    GameUtils.dramaticPrint("Você desvia do " + ataqueDeus + " por pouco!");
+                } else {
+                    int danoRealDeus = Math.max(1, danoBaseDeus - (player.getResistance() / 4));
+                    player.setHealth(player.getHealth() - danoRealDeus);
+                    
+                    GameUtils.dramaticPrint("Os Deuses usam " + ataqueDeus + "!");
+                    GameUtils.dramaticPrint("Você toma " + danoRealDeus + " de dano na fuça!");
+                    
+                    if (ataqueDeus.contains("Maldição") && danoRealDeus > 0) {
+                        player.setStamina(Math.max(0, player.getStamina() - 8));
+                        GameUtils.dramaticPrint("A maldição te drena!");
+                    }
+                }
+            }
+            
+            if (deusesVida <= 0) {
+                GameUtils.dramaticPrint("\n" + "=".repeat(60));
+                GameUtils.dramaticPrint("VITÓRIA CONTRA OS DEUSES!");
+                GameUtils.dramaticPrint("Os Deuses caem diante de você, completamente fodidos!");
+                GameUtils.dramaticPrint("Um merdinha derrotou as divindades que controlavam esse mundo!");
+                GameUtils.dramaticPrint("=".repeat(60));
+                
+                player.setLevel(player.getLevel() + 5);
+                player.setMaxHealth(player.getMaxHealth() + 50);
+                player.setHealth(player.getMaxHealth());
+                player.setMaxStamina(player.getMaxStamina() + 40);
+                player.setStamina(player.getMaxStamina());
+                player.setStrength(player.getStrength() + 15);
+                player.setAgility(player.getAgility() + 12);
+                player.setResistance(player.getResistance() + 15);
+                player.setPerception(player.getPerception() + 12);
+                
+                player.setPotions(player.getPotions() + 10);
+                
+                GameUtils.dramaticPrint("\nRECOMPENSAS PELA VITÓRIA:");
+                GameUtils.dramaticPrint("Subiu para o nível " + player.getLevel() + ", seu monstro!");
+                GameUtils.dramaticPrint("+50 Vida Máxima, +40 Stamina Máxima");
+                GameUtils.dramaticPrint("+15 Força, +12 Agilidade, +15 Resistência, +12 Percepção");
+                GameUtils.dramaticPrint("+10 Poções de Cura");
+                
+                finalEpico(player);
+                return true;
+                
+            } else if (player.getHealth() <= 0) {
+                GameUtils.dramaticPrint("\n" + "=".repeat(60));
+                GameUtils.dramaticPrint("FODEU...");
+                GameUtils.dramaticPrint("Os Deuses riem do seu corpo destruído...");
+                GameUtils.dramaticPrint("Aincrad continua nas mãos desses Deuses malditos...");
+                GameUtils.dramaticPrint("=".repeat(60));
+                return false;
+            }
+        }
+        
+        return false;
+    }
+
+    private void finalEpico(Player player) {
+        GameUtils.dramaticPrint("\n" + "=".repeat(80));
+        GameUtils.dramaticPrint("FIM DO JOGO: A LENDA MORTAL QUE DESAFIOU OS DEUSES");
+        GameUtils.dramaticPrint("=".repeat(80));
+        
+        GameUtils.dramaticPrint("\n" + player.getName() + ", você fez o impossível!");
+        GameUtils.dramaticPrint("Um mero jogador derrotou as divindades que controlavam este mundo.");
+        GameUtils.dramaticPrint("Aincrad agora é livre... Você fez o que muitos jogadores do sistema gostariam.");
+        
+        GameUtils.dramaticPrint("\nSua jornada se tornará uma lenda:");
+        GameUtils.dramaticPrint("A lenda do mortal que alcançou o poder dos deuses!");
+        GameUtils.dramaticPrint("Do herói que quebrou as correntes do destino!");
+        
+        GameUtils.dramaticPrint("\nEstatísticas Finais de " + player.getName() + ":");
+        GameUtils.dramaticPrint("Classe: " + player.getClassName());
+        GameUtils.dramaticPrint("Nível: " + player.getLevel());
+        GameUtils.dramaticPrint("Vida: " + player.getMaxHealth());
+        GameUtils.dramaticPrint("Stamina: " + player.getMaxStamina());
+        GameUtils.dramaticPrint("Força: " + player.getStrength() + " | Agilidade: " + player.getAgility());
+        GameUtils.dramaticPrint("Resistência: " + player.getResistance() + " | Percepção: " + player.getPerception());
+        
+        GameUtils.dramaticPrint("\n" + "★".repeat(80));
+        GameUtils.dramaticPrint("AGRADECIMENTO");
+        GameUtils.dramaticPrint("★".repeat(80));
+        
+        GameUtils.waitForEnter();
+
+        GameUtils.dramaticPrint("Após você derrota-los você vê a imagem do homem, o homem no qual te ajudou a treinar, aquele homem encapuzado do hospital, ele está feliz... Ao lado dele aparecem dezenas de outras pessoas, todas com um sorriso no rosto, enquanto falam, mas sem sair som 'Muito Obrigado'... Você não só ganhou dos Deuses malovelentes, mas fez com que aqueles que não foram capazes de ganhar deles, não tivessem mais o peso do fracasso, tudo não foi em vão. ");
+
+        GameUtils.waitForEnter();
+
+        GameUtils.dramaticPrint("Muito obrigado por jogar e espero que tenha se divertido com um simples jogo de console e texto. Fizemos com bastante carinho.");
     }
     
     private void gameOver() {

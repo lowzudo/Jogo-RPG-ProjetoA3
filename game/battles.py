@@ -792,40 +792,12 @@ def batalha_deuses(player):
 
 def final_epico(player):
     print("\n" + "=" * 80)
-    dramatic_print("FIM DE JOGO: O FRACASSADO QUE VIROU LENDA")
-    print("=" * 80)
-    
-    dramatic_print(f"\n{player.nome}, você fez essa merda toda!")
-    dramatic_print("Um bosta qualquer derrotou os próprios deuses.")
-    dramatic_print("Aincrad finalmente tá livre desses filhos da puta...")
-    
-    dramatic_print("\nSua história vai virar lenda:")
-    dramatic_print("A lenda do fracassado que fodeu com os deuses!")
-    dramatic_print("Do merdinha que mostrou que até os fodões caem!")
-    
-    dramatic_print(f"\nEstatísticas Finais desse monstro:")
-    print(f"Classe: {player.classe}")
-    print(f"Nível: {player.nivel}")
-    print(f"Vida: {player.vida_maxima}")
-    print(f"Stamina: {player.stamina_maxima}")
-    print(f"Força: {player.forca} | Agilidade: {player.agilidade}")
-    print(f"Resistência: {player.resistencia} | Percepção: {player.percepcao}")
-    
-    dramatic_print("\n" + "=" * 80)
-    dramatic_print("ACABOU, SEU DESGRAÇADO! VOCÊ CONSEGUIU!")
-    dramatic_print("QUEM DIRIA QUE UM FRACASSADO LIKE YOU CHEGARIA TÃO LONGE...")
-    dramatic_print("=" * 80)
-    
-    wait_for_enter()
-
-def final_epico(player):
-    print("\n" + "=" * 80)
-    dramatic_print("FIM DO JOGO: A LENDA DO MORTAL QUE DESAFIOU OS DEUSES")
+    dramatic_print("FIM DO JOGO: A LENDA MORTAL QUE DESAFIOU OS DEUSES")
     print("=" * 80)
     
     dramatic_print(f"\n{player.nome}, você fez o impossível!")
     dramatic_print("Um mero jogador derrotou as divindades que controlavam este mundo.")
-    dramatic_print("Aincrad agora é livre...")
+    dramatic_print("Aincrad agora é livre... Você fez o que muitos jogadores do sistema gostariam.")
     
     dramatic_print("\nSua jornada se tornará uma lenda:")
     dramatic_print("A lenda do mortal que alcançou o poder dos deuses!")
@@ -840,10 +812,16 @@ def final_epico(player):
     print(f"Resistência: {player.resistencia} | Percepção: {player.percepcao}")
     
     dramatic_print("\n" + "★" * 80)
-    dramatic_print("OBRIGADO POR JOGAR. ESPERO QUE TENHA SE DIVERTIDO!")
+    dramatic_print("AGRADECIMENTO")
     dramatic_print("★" * 80)
     
     wait_for_enter()
+
+    dramatic_print("Após você derrota-los você vê a imagem do homem, o homem no qual te ajudou a treinar, aquele homem encapuzado do hospital, ele está feliz... Ao lado dele aparecem dezenas de outras pessoas, todas com um sorriso no rosto, enquanto falam, mas sem sair som 'Muito Obrigado'... Você não só ganhou dos Deuses malovelentes, mas fez com que aqueles que não foram capazes de ganhar deles, não tivessem mais o peso do fracaso, tudo não foi em vão. ")
+
+    wait_for_enter()
+
+    dramatic_print("Muito obrigado por jogar e espero que tenha se divertido com um simples jogo de console e texto. Fizemos com bastante carinho.")
 
 
     

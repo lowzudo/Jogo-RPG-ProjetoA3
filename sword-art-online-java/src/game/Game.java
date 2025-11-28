@@ -87,6 +87,14 @@ public class Game {
             case "part5":
                 parte5();
                 break;
+            // NOVO: Caso para o capítulo 6
+            case "part6":
+                parte6();
+                break;
+            // NOVO: Caso para a batalha contra os deuses
+            case "batalha_deuses":
+                batalhaDeuses();
+                break;
         }
     }
 
@@ -151,24 +159,131 @@ public class Game {
         }
     }
 
+    private void parte6() {
+        GameUtils.dramaticPrint("\n" + "=".repeat(60));
+        GameUtils.dramaticPrint("CAPÍTULO 6: O DESPERTAR DIVINO");
+        GameUtils.dramaticPrint("=".repeat(60));
+        
+        GameUtils.dramaticPrint("Após enfrentar o homem encapuzado, e saber a real força dele, você fica em dúvida. Dúvida se irá realmente conseguir derrotar aquelas estátuas, afinal, nem ele conseguiu...");
+
+        GameUtils.dramaticPrint("Antes que você conseguisse pensar, o chão a baixo de você se abre, como se fosse uma porta, você iria despencar, porém com seu tempo de reação aguçado, não é isso que acontece.");
+        
+        GameUtils.waitForEnter();
+
+        GameUtils.dramaticPrint("Parece que o ser que queria que você caísse, não previu sua evolução");
+
+        GameUtils.dramaticPrint("Você pensa quem iria querer colocar você em uma emboscada. Então uma aura começa a tomar conta do subsolo.");
+
+        GameUtils.dramaticPrint("Uma aura que até então você tinha sentido. Uma aura poderosa, talvez até mais do que a do homem encapuzado. Porém você não se sente mais fraco ou inferior. Você SABE, que é mais forte do que aquela aura, do que aquele ser.");
+        
+        GameUtils.waitForEnter();
+
+        GameUtils.dramaticPrint("E com um poder desses para abrir uma cratera no chão, como se não fosse nada. Só podia ser eles, aqueles Deuses de merda");
+
+        GameUtils.dramaticPrint("Você sem pensar duas vezes pula de cabeça de onde a aura esta emanando");
+        
+        GameUtils.waitForEnter();
+
+        GameUtils.dramaticPrint("\nAo cair na cratera, você se encontra em uma dimensão completamente diferente.");
+        GameUtils.dramaticPrint("O ar é pesado, carregado com energia divina, e você sente que está no território deles.");
+        GameUtils.dramaticPrint("Mas diferente de antes, você não teme. Você anseia por esse confronto.");
+        
+        GameUtils.waitForEnter();
+
+        GameUtils.dramaticPrint("\nSeus atributos evoluíram além do que você imaginava ser possível:");
+        GameUtils.dramaticPrint("Força: " + player.getStrength() + " | Agilidade: " + player.getAgility() + " | Percepção: " + player.getPerception() + " | Resistência: " + player.getResistance());
+        GameUtils.dramaticPrint("Você não é mais o mesmo jogador que temia os Deuses. Você se tornou um Deus também.");
+        
+        GameUtils.waitForEnter();
+
+        GameUtils.dramaticPrint("\nDas sombras, figuras divinas começam a emergir.");
+        GameUtils.dramaticPrint("São eles - os Deuses que brincam com as vidas dos jogadores como se fossem marionetes.");
+        GameUtils.dramaticPrint("Mas hoje, as cordas serão cortadas.");
+        
+        GameUtils.waitForEnter();
+
+        GameUtils.dramaticPrint("\nO Deus principal olha para você com desdém e mostra o mesmo sorriso da última vez: 'Quem diria, você está vivo por um milagre e ainda tem coragem de voltar aqui. Apenas morra inseto'");
+        GameUtils.dramaticPrint("'Você deveria ter caído na armadilha como os outros... Mas não importa, vamos acabar com isso aqui.'");
+        GameUtils.dramaticPrint("Eles liberam uma aura divina poderosa.");
+        
+        GameUtils.waitForEnter();
+
+        GameUtils.dramaticPrint("\nVocê não se acovarda diante a aura, e emana a sua de volta, mostrando para eles que quem deve temer, não é você.");
+        GameUtils.dramaticPrint("Os Deuses arregalam os olhos assustados e se perguntam: 'Como um reles humano conseguiu tamanho poder...'.");
+
+        GameUtils.dramaticPrint("\n" + "-".repeat(60));
+        GameUtils.dramaticPrint("O confronto contra os Deuses está prestes a começar!");
+        GameUtils.dramaticPrint("O destino de Aincrad está em suas mãos!");
+        GameUtils.dramaticPrint("-".repeat(60));
+        
+        GameUtils.waitForEnter();
+
+        GameUtils.dramaticPrint("Novos poderes desbloqueados.");
+
+        // Adicionar ataques especiais para a batalha final
+        String className = player.getClassName();
+        if (className.equals("Mago")) {
+            player.addAttack("EXPLOSÃO CÓSMICA", 20, 25);
+            player.addAttack("DILÚVIO ARCANO", 18, 22);
+            player.addAttack("FIM DOS TEMPOS", 25, 30);
+            GameUtils.dramaticPrint("Novos ataques desbloqueados: EXPLOSÃO CÓSMICA, DILÚVIO ARCANO, FIM DOS TEMPOS");
+        } else if (className.equals("Espadachim")) {
+            player.addAttack("CORTE FINAL", 22, 28);
+            player.addAttack("DANÇA DAS LÂMINAS", 19, 24);
+            player.addAttack("JULGAMENTO DIVINO", 26, 32);
+            GameUtils.dramaticPrint("Novos ataques desbloqueados: CORTE FINAL, DANÇA DAS LÂMINAS, JULGAMENTO DIVINO");
+        } else if (className.equals("Berserker")) {
+            player.addAttack("FÚRIA CELESTIAL", 24, 30);
+            player.addAttack("METEORO DA PERDIÇÃO", 21, 26);
+            player.addAttack("APOCALIPSE", 28, 35);
+            GameUtils.dramaticPrint("Novos ataques desbloqueados: FÚRIA CELESTIAL, METEORO DA PERDIÇÃO, APOCALIPSE");
+        }
+
+        GameUtils.dramaticPrint("\n" + "★".repeat(60));
+        GameUtils.dramaticPrint("PREPARE-SE PARA O CONFRONTO FINAL!");
+        GameUtils.dramaticPrint("★".repeat(60));
+
+        GameUtils.waitForEnter();
+        
+        // Move para a batalha contra os deuses
+        gameTree.moveTo("continuar");
+    }
+
+    // NOVO MÉTODO: Batalha contra os Deuses
+    private void batalhaDeuses() {
+        GameUtils.dramaticPrint("\n" + "=".repeat(60));
+        GameUtils.dramaticPrint("BATALHA FINAL: CONTRA OS DEUSES");
+        GameUtils.dramaticPrint("=".repeat(60));
+        
+        boolean venceu = battleManager.batalhaDeuses(player);
+        if (venceu) {
+            gameTree.moveTo("vitoria");
+        } else {
+            gameTree.moveTo("game_over");
+        }
+    }
+
     private void vitoriaFinal() {
         GameUtils.dramaticPrint("\n" + "=".repeat(60));
         GameUtils.dramaticPrint("VITÓRIA FINAL!");
         GameUtils.dramaticPrint("=".repeat(60));
         
         GameUtils.dramaticPrint("PARABÉNS, " + player.getName() + "!");
-        GameUtils.dramaticPrint("Você se tornou o novo Guardião do Sistema!");
-        GameUtils.dramaticPrint("O homem encapuzado finalmente encontrou paz, e você agora carrega o fardo...");
-        GameUtils.dramaticPrint("Mas esta é apenas o começo de sua verdadeira jornada.");
+        GameUtils.dramaticPrint("Você derrotou os Deuses de Aincrad!");
+        GameUtils.dramaticPrint("As estátuas caíram diante do seu poder.");
+        GameUtils.dramaticPrint("O ciclo de opressão foi quebrado!");
         
         GameUtils.dramaticPrint("\nSeus atributos finais:");
         GameUtils.dramaticPrint("Força: " + player.getStrength());
         GameUtils.dramaticPrint("Vida: " + player.getMaxHealth());
         GameUtils.dramaticPrint("Stamina: " + player.getMaxStamina());
         GameUtils.dramaticPrint("Nível: " + player.getLevel());
+        GameUtils.dramaticPrint("Agilidade: " + player.getAgility());
+        GameUtils.dramaticPrint("Resistência: " + player.getResistance());
+        GameUtils.dramaticPrint("Percepção: " + player.getPerception());
         
         GameUtils.dramaticPrint("\nQUEM DIRIA QUE UM FRACASSADO IGUAL VOCÊ CHEGARIA TÃO LONGE...");
-        GameUtils.dramaticPrint("Mas lembre-se: as estátuas ainda aguardam...");
+        GameUtils.dramaticPrint("Mas agora você é uma lenda - o mortal que desafiou e venceu os Deuses!");
     }
     
     private void showChoices(TreeNode node) {
@@ -177,7 +292,6 @@ public class Game {
         }
         
         if (node.getChoices().containsKey("")) {
-            // REMOVIDO: GameUtils.waitForEnter(); - Desnecessário
             gameTree.moveTo("");
             return;
         }
@@ -191,7 +305,6 @@ public class Game {
         }
         
         if (escolhasValidas.isEmpty()) {
-            // REMOVIDO: GameUtils.waitForEnter(); - Desnecessário
             if (!node.getChoices().isEmpty()) {
                 String autoChoice = node.getChoices().keySet().iterator().next();
                 gameTree.moveTo(autoChoice);
@@ -266,11 +379,8 @@ public class Game {
         GameUtils.dramaticPrint("então não me decepcione fracassado!");
         GameUtils.dramaticPrint("Essa dungeon tem algo de especial,");
         GameUtils.dramaticPrint("eu quero que você derrote-os e descubra o que está lá HAHAHAHA!");
-
-        // REMOVIDO: GameUtils.waitForEnter(); - Desnecessário
     }
     
-    // MÉTODO AUXILIAR PARA TRATAMENTO DE ESCOLHAS
     private String obterEscolhaValida(String pergunta, String[] opcoesValidas) {
         while (true) {
             GameUtils.dramaticPrint(pergunta);
@@ -295,7 +405,6 @@ public class Game {
         GameUtils.dramaticPrint("Ao entrar na dungeon, você sente um clima estranho, como se a todo momento você estivesse sendo observado. Mesmo enfrentando os goblins, e vários outros inimigos dentro dessa dungeon, a sensação persiste.");
         GameUtils.dramaticPrint("Você encontra uma sala, com uma porta gigante, adornada com símbolos antigos e misteriosos. Ao se aproximar, uma voz ecoa em sua cabeça, 'Entre', diz a voz. Você sente calafrios, sente que algo grande irá acontecer caso você entre nessa sala... Porém, não sabe dizer se será algo bom ou ruim.");
         
-        // REMOVIDO: GameUtils.waitForEnter();
         
         String decisao = obterEscolhaValida("\nO que você irá fazer? (entrar/abandonar)", new String[]{"entrar", "abandonar"});
 
@@ -308,10 +417,9 @@ public class Game {
         }
         
         if (sobreviveu) {
-            // Pausa final antes de ir para o sistema
             GameUtils.dramaticPrint("\nPressione ENTER para continuar sua jornada como jogador-sistema...");
             GameUtils.waitForEnter();
-            gameTree.moveTo(""); // Choice vazia - apenas ENTER
+            gameTree.moveTo(""); 
         } else {
             gameTree.moveTo("game_over");
         }
