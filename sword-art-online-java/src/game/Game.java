@@ -87,11 +87,9 @@ public class Game {
             case "part5":
                 parte5();
                 break;
-            // NOVO: Caso para o capítulo 6
             case "part6":
                 parte6();
                 break;
-            // NOVO: Caso para a batalha contra os deuses
             case "batalha_deuses":
                 batalhaDeuses();
                 break;
@@ -549,7 +547,7 @@ public class Game {
     }
     
     private void sistema() {
-        GameUtils.dramaticPrint("\nVocê acorda em um hospital, com o corpo inteiro. Você não está mais partido ao meio, e está alive, isso é impossivel, você pensa consigo mesmo.");
+        GameUtils.dramaticPrint("\nVocê acorda em um hospital, com o corpo inteiro. Você não está mais partido ao meio, e está vivo, isso é impossivel, você pensa consigo mesmo.");
         GameUtils.dramaticPrint("Você começa a se levantar da cama, mas sente medo, medo daquilo se repetir, medo de continuar sendo fraco, medo do inevitável.");
         GameUtils.dramaticPrint("Ao olhar para o lado, você vê um homem, encapuzado, você não consegue ver seu rosto, mas sente uma presença poderosa vindo dele.");
 
@@ -573,10 +571,11 @@ public class Game {
     private void iniciarTreinamento() {
         TrainingManager trainingManager = new TrainingManager();
         boolean sucesso = trainingManager.iniciarTreinamento(player);
+        
         if (sucesso) {
-            gameTree.moveTo("");
+            gameTree.moveTo("sucesso");
         } else {
-            gameTree.moveTo("game_over");
+            gameTree.moveTo("falha");
         }
     }
 }

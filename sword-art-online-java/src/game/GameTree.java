@@ -29,7 +29,7 @@ public class GameTree {
         
         part2.addChoice("continuar", batalhaGoblins);
         
-        batalhaGoblins.addChoice("", part3);
+        batalhaGoblins.addChoice("continuar", part3);
         batalhaGoblins.addChoice("game_over", gameOver);
         
         part3.addChoice("continuar", sistema);
@@ -37,7 +37,8 @@ public class GameTree {
 
         sistema.addChoice("continuar", treinamento);
         
-        treinamento.addChoice("continuar", part5);
+        treinamento.addChoice("sucesso", part5);    
+        treinamento.addChoice("falha", gameOver);   
         
         part5.addChoice("continuar", part6);
         
@@ -48,7 +49,6 @@ public class GameTree {
 
         this.currentNode = root;
     }
-
     
     public TreeNode getCurrentNode() { return currentNode; }
     public TreeNode getRoot() { return root; }
