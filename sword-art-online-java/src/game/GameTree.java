@@ -37,7 +37,7 @@ public class GameTree {
 
         sistema.addChoice("continuar", treinamento);
         
-        treinamento.addChoice("sucesso", part5);    
+        treinamento.addChoice("continuar", part5);    
         treinamento.addChoice("falha", gameOver);   
         
         part5.addChoice("continuar", part6);

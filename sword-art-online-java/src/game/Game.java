@@ -172,7 +172,7 @@ public class Game {
 
         GameUtils.dramaticPrint("Você pensa quem iria querer colocar você em uma emboscada. Então uma aura começa a tomar conta do subsolo.");
 
-        GameUtils.dramaticPrint("Uma aura que até então você tinha sentido. Uma aura poderosa, talvez até mais do que a do homem encapuzado. Porém você não se sente mais fraco ou inferior. Você SABE, que é mais forte do que aquela aura, do que aquele ser.");
+        GameUtils.dramaticPrint("Uma aura que até então você tinha sentido. Uma aura poderosa, talvez até mais do que a do homens encapuzado. Porém você não se sente mais fraco ou inferior. Você SABE, que é mais forte do que aquela aura, do que aquele ser.");
         
         GameUtils.waitForEnter();
 
@@ -218,7 +218,6 @@ public class Game {
 
         GameUtils.dramaticPrint("Novos poderes desbloqueados.");
 
-        // Adicionar ataques especiais para a batalha final
         String className = player.getClassName();
         if (className.equals("Mago")) {
             player.addAttack("EXPLOSÃO CÓSMICA", 20, 25);
@@ -243,11 +242,9 @@ public class Game {
 
         GameUtils.waitForEnter();
         
-        // Move para a batalha contra os deuses
         gameTree.moveTo("continuar");
     }
 
-    // NOVO MÉTODO: Batalha contra os Deuses
     private void batalhaDeuses() {
         GameUtils.dramaticPrint("\n" + "=".repeat(60));
         GameUtils.dramaticPrint("BATALHA FINAL: CONTRA OS DEUSES");
@@ -459,7 +456,7 @@ public class Game {
     private boolean cenarioAbandonar() {
         GameUtils.dramaticPrint("\nVocê decide abandonar a dungeon, como um covarde. Você ainda tem medo de enfrentar o desconhecido.");
         GameUtils.dramaticPrint("E isso o torna incapaz de evoluir, você está sempre fugindo e fugindo do que desconhece.");
-        GameUtils.dramaticPrint("Mas saiba, caro " + player.getName() + ", que essa dungeon, não é do tipo de fazer as pazes com covardes...");
+        GameUtils.dramaticPrint("Mais saiba, caro " + player.getName() + ", que essa dungeon, não é do tipo de fazer as pazes com covardes...");
 
 
         GameUtils.dramaticPrint("\nVocê sente algo te perseguindo enquanto tenta sair da dungeon.");
@@ -549,7 +546,7 @@ public class Game {
     private void sistema() {
         GameUtils.dramaticPrint("\nVocê acorda em um hospital, com o corpo inteiro. Você não está mais partido ao meio, e está vivo, isso é impossivel, você pensa consigo mesmo.");
         GameUtils.dramaticPrint("Você começa a se levantar da cama, mas sente medo, medo daquilo se repetir, medo de continuar sendo fraco, medo do inevitável.");
-        GameUtils.dramaticPrint("Ao olhar para o lado, você vê um homem, encapuzado, você não consegue ver seu rosto, mas sente uma presença poderosa vindo dele.");
+        GameUtils.dramaticPrint("Ao olhar para o lado, você vê um homens, encapuzado, você não consegue ver seu rosto, mas sente uma presença poderosa vindo dele.");
 
 
         GameUtils.dramaticPrint("\nHomem: 'Então você é o novato? Hmm... Você ainda não passa de um fraco, mas vejo que mesmo com medo, você ainda tem vontade de viver. Obedeça ao sistema garoto, ele te deixara mais forte do que qualquer um.'");
@@ -573,9 +570,9 @@ public class Game {
         boolean sucesso = trainingManager.iniciarTreinamento(player);
         
         if (sucesso) {
-            gameTree.moveTo("sucesso");
+            gameTree.moveTo("continuar");
         } else {
-            gameTree.moveTo("falha");
+            gameTree.moveTo("game_over");
         }
     }
 }

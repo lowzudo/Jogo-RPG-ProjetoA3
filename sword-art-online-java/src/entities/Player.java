@@ -14,12 +14,10 @@ public class Player {
     private int maxStamina;
     private int potions;
     
-    // NOVOS ATRIBUTOS ADICIONADOS
     private int agility;
     private int resistance;
     private int perception;
     
-    // Sistema de ataques
     private Map<String, Attack> attacks;
     private List<String> attackNames;
     
@@ -87,7 +85,6 @@ public class Player {
         attackNames.addAll(attacks.keySet());
     }
     
-    // ========== GETTERS ==========
     public String getName() { return name; }
     public String getClassName() { return className; }
     public int getLevel() { return level; }
@@ -100,12 +97,10 @@ public class Player {
     public Map<String, Attack> getAttacks() { return attacks; }
     public List<String> getAttackNames() { return attackNames; }
     
-    // NOVOS GETTERS
     public int getAgility() { return agility; }
     public int getResistance() { return resistance; }
     public int getPerception() { return perception; }
     
-    // ========== SETTERS ==========
     public void setHealth(int health) { this.health = health; }
     public void setStamina(int stamina) { this.stamina = stamina; }
     public void setPotions(int potions) { this.potions = potions; }
@@ -113,13 +108,11 @@ public class Player {
     public void setMaxHealth(int maxHealth) { this.maxHealth = maxHealth; }
     public void setMaxStamina(int maxStamina) { this.maxStamina = maxStamina; }
     
-    // NOVOS SETTERS
     public void setAgility(int agility) { this.agility = agility; }
     public void setResistance(int resistance) { this.resistance = resistance; }
     public void setPerception(int perception) { this.perception = perception; }
     public void setLevel(int level) { this.level = level; }
     
-    // ========== MÉTODOS DE AÇÃO ==========
     public void levelUp() {
         int oldStrength = strength;
         int oldHealth = maxHealth;

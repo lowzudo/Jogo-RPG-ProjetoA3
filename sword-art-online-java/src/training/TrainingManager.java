@@ -89,7 +89,6 @@ public class TrainingManager {
         int pontos = 0;
         int maxPontos = 0;
         
-        // Desafio 1: Corrida contra o tempo
         GameUtils.dramaticPrint("\n" + "-".repeat(40));
         GameUtils.dramaticPrint("DESAFIO 1: CORRIDA CONTRA O TEMPO");
         GameUtils.dramaticPrint("-".repeat(40));
@@ -98,7 +97,6 @@ public class TrainingManager {
         
         GameUtils.waitForEnter();
         
-        // Desafio 2: Levantamento de pesos
         GameUtils.dramaticPrint("\n" + "-".repeat(40));
         GameUtils.dramaticPrint("DESAFIO 2: LEVANTAMENTO DE PESOS");
         GameUtils.dramaticPrint("-".repeat(40));
@@ -107,7 +105,6 @@ public class TrainingManager {
         
         GameUtils.waitForEnter();
         
-        // Desafio 3: Meditação sob pressão
         GameUtils.dramaticPrint("\n" + "-".repeat(40));
         GameUtils.dramaticPrint("DESAFIO 3: MEDITAÇÃO SOB PRESSÃO");
         GameUtils.dramaticPrint("-".repeat(40));
@@ -116,7 +113,6 @@ public class TrainingManager {
         
         GameUtils.waitForEnter();
         
-        // Desafio 4: Reação rápida
         GameUtils.dramaticPrint("\n" + "-".repeat(40));
         GameUtils.dramaticPrint("DESAFIO 4: TESTE DE REAÇÃO");
         GameUtils.dramaticPrint("-".repeat(40));
@@ -125,14 +121,12 @@ public class TrainingManager {
         
         GameUtils.waitForEnter();
         
-        // Desafio 5: Memória do Sistema
         GameUtils.dramaticPrint("\n" + "-".repeat(40));
         GameUtils.dramaticPrint("DESAFIO 5: MEMÓRIA DO SISTEMA");
         GameUtils.dramaticPrint("-".repeat(40));
         pontos += minigameMemoria();
         maxPontos += 5;
         
-        // Calcular recompensas baseadas no desempenho
         double percentual = (double) pontos / maxPontos;
         int bonusMultiplicador = 1;
         
@@ -155,7 +149,6 @@ public class TrainingManager {
         
         GameUtils.waitForEnter();
         
-        // Retorna as recompensas com bônus
         return new Recompensas(3 * bonusMultiplicador, 
                                15 * bonusMultiplicador, 
                                20 * bonusMultiplicador);
@@ -174,7 +167,7 @@ public class TrainingManager {
         GameUtils.dramaticPrint("\nAGORA! Digite 'correr' o mais rápido possível!");
         
         long startTime = System.currentTimeMillis();
-        long endTime = startTime + 5000; // 5 segundos
+        long endTime = startTime + 5000;
         int contador = 0;
         
         while (System.currentTimeMillis() < endTime) {
@@ -188,7 +181,7 @@ public class TrainingManager {
         
         GameUtils.dramaticPrint("\nTEMPO ESGOTADO!");
         
-        int pontos = Math.min(contador / 3, 5); // Máximo 5 pontos
+        int pontos = Math.min(contador / 3, 5);
         GameUtils.dramaticPrint("Você deu " + contador + " passos!");
         GameUtils.dramaticPrint("Pontos ganhos: " + pontos + "/5");
         
@@ -197,22 +190,22 @@ public class TrainingManager {
     
     private int minigameLevantamentoPesos() {
         GameUtils.dramaticPrint("\nSistema: 'Levante esses pesos digitando a sequência correta!'");
-        GameUtils.dramaticPrint("Sequência: ↑ ↑ ↓ ↓ ← → ← →");
-        GameUtils.dramaticPrint("Digite os comandos (use: cima, baixo, esquerda, direita)");
+        GameUtils.dramaticPrint("Sequência: CIMA CIMA BAIXO BAIXO ESQUERDA DIREITA ESQUERDA DIREITA");
+        GameUtils.dramaticPrint("Digite exatamente como mostrado acima (use: CIMA, BAIXO, ESQUERDA, DIREITA)");
         
-        String[] sequencia = {"cima", "cima", "baixo", "baixo", "esquerda", "direita", "esquerda", "direita"};
+        String[] sequencia = {"CIMA", "CIMA", "BAIXO", "BAIXO", "ESQUERDA", "DIREITA", "ESQUERDA", "DIREITA"};
         int acertos = 0;
         
         for (int i = 0; i < sequencia.length; i++) {
             GameUtils.dramaticPrint("\nMovimento " + (i + 1) + "/8: ");
             System.out.print("> ");
-            String input = scanner.nextLine().trim().toLowerCase();
+            String input = scanner.nextLine().trim().toUpperCase();
             
             if (input.equals(sequencia[i])) {
                 acertos++;
-                GameUtils.dramaticPrint("Correto! Peso levantado!");
+                GameUtils.dramaticPrint("✅ Correto! Peso levantado! (" + sequencia[i] + ")");
             } else {
-                GameUtils.dramaticPrint("Errado! O peso caiu!");
+                GameUtils.dramaticPrint("❌ Errado! Você deveria ter digitado: " + sequencia[i]);
             }
         }
         
@@ -250,7 +243,7 @@ public class TrainingManager {
             Thread.currentThread().interrupt();
         }
         
-        int pontos = 5; // Assume sucesso
+        int pontos = 5;
         GameUtils.dramaticPrint("\nTempo acabou! Você manteve a concentração!");
         GameUtils.dramaticPrint("Pontos ganhos: 5/5");
         
@@ -262,7 +255,7 @@ public class TrainingManager {
         GameUtils.dramaticPrint("Preparado?");
         
         try {
-            Thread.sleep(2000 + random.nextInt(3000)); // Espera aleatória
+            Thread.sleep(2000 + random.nextInt(3000));
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
@@ -298,7 +291,6 @@ public class TrainingManager {
     private int minigameMemoria() {
         GameUtils.dramaticPrint("\nSistema: 'Memorize esta sequência de números!'");
         
-        // Gerar sequência aleatória
         StringBuilder sequencia = new StringBuilder();
         for (int i = 0; i < 6; i++) {
             sequencia.append(random.nextInt(10));
@@ -339,9 +331,9 @@ public class TrainingManager {
     private void aplicarRecompensas(Player player, Recompensas recompensas) {
         player.setStrength(player.getStrength() + recompensas.forca);
         player.setMaxHealth(player.getMaxHealth() + recompensas.vida);
-        player.setHealth(player.getMaxHealth()); // Recupera vida completa
+        player.setHealth(player.getMaxHealth());
         player.setMaxStamina(player.getMaxStamina() + recompensas.stamina);
-        player.setStamina(player.getMaxStamina()); // Recupera stamina completa
+        player.setStamina(player.getMaxStamina());
         
         GameUtils.dramaticPrint("\n" + "=".repeat(40));
         GameUtils.dramaticPrint("ATRIBUTOS ATUALIZADOS!");

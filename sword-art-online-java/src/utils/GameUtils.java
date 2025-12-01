@@ -30,11 +30,9 @@ public class GameUtils {
     
     public static void clearScreen() {
         try {
-            // Para Windows
             if (System.getProperty("os.name").contains("Windows")) {
                 new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
             } 
-            // Para Linux/Mac
             else {
                 new ProcessBuilder("clear").inheritIO().start().waitFor();
             }
